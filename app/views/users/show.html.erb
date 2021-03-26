@@ -10,14 +10,15 @@
         </div>
       </td>
       <td>指定勤務時間：<%= format_basic_info(@user.work_time) %></td>
-      <td>基本時間：<%= format_basic_info(@user.basic_time) %></td>
-      <td>月初日：<%= l(@first_day, format: :short) %></td>
+      <td colspan="2">基本時間：<%= format_basic_info(@user.basic_time) %></td>
+      <td>初日：<%= l(@first_day, format: :short) %></td>
     </tr>
     <tr>
       <td>所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
       <td>名前：<%= @user.name %></td>
+      <td>コード:<%= @user.id %></td>
       <td>出勤日数：<%= @worked_sum %>日</td>
-      <td>月末日：<%= l(@last_day, format: :short) %></td>
+      <td>締め：<%= l(@last_day, format: :short) %></td>
     </tr>
   </table>
 </div>
@@ -29,15 +30,23 @@
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
     <thead>
       <tr>
-        <th>日付</th>
-        <th>曜日</th>
+        <th rowspan="2">日付</th>
+        <th rowspan="2">曜日</th>
+        <th colspan="3">出社</th>
+        <th colspan="2">退社</th>
+        <th rowspan="2">在社時間</th>
+        <th rowspan="2">残業指示</th>
+        <th rowspan="2">指示者</th>
+        <th rowspan="2">備考</th>
+        
+       
+      </tr>
+      <tr>
+      　<th>出社時</th>
+        <th>出社分</th>
         <th>勤怠登録</th>
-        <th>出勤時間</th>
-        <th>退勤時間</th>
-        <th>在社時間</th>
-        <th>備考</th>
-        <th>残業指示</th>  
-        <th>指示者</th>
+        <th>退社時</th>
+        <th>退社分</th>
       </tr>
     </thead>
 
@@ -60,6 +69,10 @@
            <% end %>
           </td>
           <td><%= day.note %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
        </tr>
       <% end %>
     </tbody>
@@ -67,17 +80,17 @@
       <!--rowspan:縦結合、colspan：横結合-->
       <tr>
         <td colspan="2">累計日数</td>
-        <td colspan="2">総合勤務時間</td>
-        <td colspan="2">累計在社時間</td>
-        <td rowspan="2"></td>
-        <td></td>
+        <td colspan="3">総合勤務時間</td>
+        <td colspan="3">累計在社時間</td>
+        <td colspan="3">所属長承認</td>
+        
       </tr>
       <tr>
         <td colspan="2"><%= @attendances.count %></td>
-        <td colspan="2"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
-        <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
-        <td rowspan="2"></td>
-        <td></td>
+        <td colspan="3"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
+        <td colspan="3"><%= format("%.2f", @total_working_times.to_f) %></td>
+        <td colspan="3"></td>
+      
       </tr>
     </tfoot>    
   </table>

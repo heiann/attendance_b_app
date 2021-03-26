@@ -10,13 +10,16 @@
           <th>出勤時間</th>
           <th>退勤時間</th>
           <th>在社時間</th>
+          <th>残業指示</th>
+          <th>指示者</th>
           <th>備考</th>
+          
         </tr>
       </thead>
       <tbody>
         <% @attendances.each do |day| %>
           <%= f.fields_for "attendances[]", day do |attendance| %>
-            <tr>
+          <tr>
               <td><%= l(day.worked_on, format: :short) %></td>
               <td><%= $days_of_the_week[day.worked_on.wday] %></td>
            <% if !current_user.admin? && (Date.current < day.worked_on) %>
@@ -28,10 +31,17 @@
            <% end %>
               <td>
                   <% if day.started_at.present? && day.finished_at.present? %>
-                  <%= working_times(day.started_at, day.finished_at) %>
+                    <%= working_times(day.started_at, day.finished_at) %>
                   <% end %>
-              </td>
-              <td><%= attendance.text_field :note, class: "form-control" %></td>
+              <% if current_user.admin? %>
+                <td><%= attendance.text_field :note, class: "form-control" %></td>
+                <td><%= attendance.text_field :note, class: "form-control" %></td>
+                <td><%= attendance.text_field :note, class: "form-control" %></td>
+              <% else %>
+                <td></td>
+                <td></td>
+                <td></td>
+              <% end %>
             </tr>
           <% end %>
         <% end %>
@@ -44,3 +54,4 @@
     <%= link_to "キャンセル", user_path(date: @first_day), class: "btn btn-lg btn-default" %>
   </div>
 <% end %>
+             
