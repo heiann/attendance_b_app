@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
 root 'static_pages#top'
 get '/signup', to: 'users#new'
-get '/search', to: 'users#search'
 
   # ログイン機能
 get    '/login', to: 'sessions#new'
@@ -11,6 +10,7 @@ delete '/logout', to: 'sessions#destroy'
 
  resources :users do
    member do
+     
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'attendances/edit_one_month' 

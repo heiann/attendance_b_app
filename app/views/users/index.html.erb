@@ -1,24 +1,24 @@
 <% provide(:title, 'All Users') %>
+
 <h1>ユーザー一覧</h1>
 
+<%= will_paginate %>
 <div class="row container">
   <div class="col-md-4 col-md-offset-8">
     <p>ユーザー名検索</p>
-    <%= form_tag(users_path, :method => 'get' ) do %>
-      <%= text_field_tag :user %>
-      <%= submit_tag '検索', :name => nil %>
-    <% end %>
+     <%= form_tag(users_path, method: "get") do %>
+       <%= text_field_tag :name %>
+       <%= submit_tag 'Search', class: "btn btn-primary" %>
+     <% end %>
   </div>
 </div>
 
-<div class="col-md-6 col-md-offset-1">
-  <%= will_paginate %>
-  <table class="table table-condensed table-hover" id="table-users">
+<div class="col-md-10 col-md-offset-1">
+ <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
         <th><%= User.human_attribute_name :name %></th>
         <th></th>
-      </tr>
     </thead>
 
     <% @users.each do |user| %>
@@ -41,8 +41,8 @@
       </tr>
     <% end %>
   </table>
-  <%= will_paginate %>
-</div>
+</div> 
+<%= will_paginate %>
 
 
 <!--モーダルウインドウ表示-->
