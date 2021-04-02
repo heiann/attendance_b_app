@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   before_action :set_one_month, only: :show
 
   def index
+    @users = User.all
     if params[:name].present?
       @users = User.where("name LIKE ?", "%#{params[:name]}%").paginate(page: params[:page])
     else
@@ -52,15 +53,18 @@ class UsersController < ApplicationController
   end
 
   def edit_basic_info
+    @users = User.all
   end
   
   def update_basic_info
+    @users = User.all
     if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。"
+      flash[:success] = "基本情報を更新しました。"
+      redirect_to  users_url
     else
-      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+      flash[:danger] = "更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+      redirect_to edit_basic_info_user_url
     end
-    redirect_to users_url
   end
 
   private
