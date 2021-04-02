@@ -19,7 +19,7 @@
           <tbody>
             <% @users.each do |user| %>
               <tr>
-                <td><%= current_user.name %></td>
+                <td><%= user.name %></td>
                 <td><%= f.text_field :department, class: "form-control" %></td>
                 <td><%= f.time_field :basic_time, class: "form-control" %></td>
                 <td><%= f.time_field :work_time, class: "form-control" %></td>
@@ -28,10 +28,8 @@
           </tbody>
         </table>
         <div class="center">
-          <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
-         <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" >
-                キャンセル
-         </button>
+          <%= f.submit yield(:button_text), class: "btn btn-primary btn-lg btn-#{yield(:class_text)}" %>
+          <%= link_to "キャンセル", edit_basic_info_user_path, class: "btn btn-lg btn-default" %>
         </div>
      </div>
    </div>
