@@ -1,31 +1,37 @@
 <% provide(:class_text, 'basic-info') %>
 <% provide(:button_text, '更新') %>
 
+ <%= form_with(model: @user, url: update_basic_info_user_path(@user), local: true, method: :patch) do |f| %>
+         <%= render 'shared/error_messages', object: @user %>
   <h1>基本情報編集</h1>
    
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <%= form_with(model: @user, url: update_basic_info_user_path(@user), local: true, method: :patch) do |f| %>
-         <%= render 'shared/error_messages', object: @user %>
-
-        <%= f.label :name, class: "label-#{yield(:class_text)}" %>
-        <p><%= @user.name %></p>
-
-        <%= f.label :department, class: "label-#{yield(:class_text)}" %>
-        <%= f.label :basic_time, class: "label-#{yield(:class_text)}" %>
-        <%= f.time_field :basic_time, class: "form-control" %>
-
-        <%= f.label :work_time, class: "label-#{yield(:class_text)}" %>
-        <%= f.time_field :work_time, class: "form-control" %>
-
+        <table class="table table-bordered table-condensed user-table">
+          <thead>
+            <tr>
+              <th>名前</th>
+              <th>所屬</th>
+              <th>基本勤務時間</th>
+              <th>指定勤務時間</th>
+            </tr> 
+          </thead>  
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%= f.text_field :department, class: "form-control" %></td>
+                <td><%= f.time_field :basic_time, class: "form-control" %></td>
+                <td><%= f.time_field :work_time, class: "form-control" %></td>
+              </tr>
+           <% end %>
+          </tbody>
+        </table>
         <div class="center">
-          <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
-         <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" >
-                キャンセル
-         </button>
-            </div>
-      <% end %>
-    </div>
-  </div>
+          <%= f.submit yield(:button_text), class: "btn btn-primary btn-lg btn-block" %>
+          
+        </div>
+     </div>
+   </div>
+<% end %>
    
- 
