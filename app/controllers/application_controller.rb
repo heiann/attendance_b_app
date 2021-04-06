@@ -1,12 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
-
+  
   $days_of_the_week = %w{日 月 火 水 木 金 土}
   
- 
   # beforフィルター
-
   # param sハッシュからユーザーを取得します。
   def set_user
     @user = User.find(params[:id])
@@ -31,8 +29,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_url unless current_user.admin?
   end
   
-   
-
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
   def set_one_month 
     @first_day = params[:date].nil? ?
